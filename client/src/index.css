@@ -1,0 +1,340 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Improved contrast for dark mode and theme compatibility */
+.dark {
+  --background: 222 47% 11%; /* Deeper dark background for better contrast */
+  --foreground: 210 40% 98%; /* Very light color for text on dark backgrounds */
+  --card: 222 47% 15%; /* Slightly lighter than background for cards */
+  --card-foreground: 210 40% 98%; /* Same as foreground */
+  --popover: 222 47% 15%; /* Same as card */
+  --popover-foreground: 210 40% 98%; /* Same as foreground */
+  --primary-foreground: 210 40% 98%; /* Light text on primary buttons */
+  --secondary: 217 32% 17%; /* Dark secondary color */
+  --secondary-foreground: 210 40% 98%; /* Light text on secondary buttons */
+  --muted: 217 32% 17%; /* Dark muted background */
+  --muted-foreground: 215 20% 65%; /* Medium light text for muted elements */
+  --accent: 217 32% 17%; /* Dark accent color */
+  --accent-foreground: 210 40% 98%; /* Light text on accent elements */
+  --destructive: 0 62% 30%; /* Dark red for destructive elements */
+  --destructive-foreground: 210 40% 98%; /* Light text on destructive elements */
+  --border: 217 32% 17%; /* Dark border color */
+  --input: 217 32% 17%; /* Dark input background */
+  --ring: 224 76% 48%; /* Focus ring color */
+}
+
+.light {
+  --background: 0 0% 100%; /* Pure white background */
+  --foreground: 222 47% 11%; /* Very dark color for text on light backgrounds */
+  --card: 0 0% 100%; /* White card background */
+  --card-foreground: 222 47% 11%; /* Same as foreground */
+  --popover: 0 0% 100%; /* White popover background */
+  --popover-foreground: 222 47% 11%; /* Same as foreground */
+  --primary-foreground: 210 40% 98%; /* Light text on primary buttons */
+  --secondary: 210 40% 96%; /* Light secondary color */
+  --secondary-foreground: 222 47% 11%; /* Dark text on secondary elements */
+  --muted: 210 40% 96%; /* Light muted background */
+  --muted-foreground: 215 25% 27%; /* Dark enough for contrast on light background */
+  --accent: 210 40% 96%; /* Light accent color */
+  --accent-foreground: 222 47% 11%; /* Dark text on accent elements */
+  --destructive: 0 84% 60%; /* Bright red for destructive elements */
+  --destructive-foreground: 210 40% 98%; /* Light text on destructive elements */
+  --border: 214 32% 91%; /* Light border color */
+  --input: 214 32% 91%; /* Light input background */
+  --ring: 222 65% 42%; /* Primary color for focus ring */
+}
+
+/* Dark theme text contrast improvements */
+.dark .text-muted-foreground {
+  color: rgba(180, 185, 195, 1); /* Slightly lighter than gray-400 for better contrast */
+}
+
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark h4, 
+.dark h5, 
+.dark h6 {
+  color: rgba(255, 255, 255, 1); /* White for maximum heading contrast */
+}
+
+/* Light theme text contrast improvements */
+.light h1, 
+.light h2, 
+.light h3, 
+.light h4, 
+.light h5, 
+.light h6 {
+  color: rgba(10, 15, 25, 1); /* Deeper than gray-900 for better contrast */
+}
+
+.light .text-muted-foreground {
+  color: rgba(55, 65, 81, 1); /* gray-700 for better contrast in light mode */
+}
+
+/* Form input contrast improvements for light theme */
+.light input,
+.light textarea,
+.light select {
+  color: rgba(17, 24, 39, 1); /* Near black text */
+  background-color: rgba(255, 255, 255, 1); /* White background */
+  border-color: rgba(209, 213, 219, 1); /* gray-300 */
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: rgba(107, 114, 128, 1); /* gray-500 for visible but not too prominent placeholder */
+}
+
+/* Ensure dropdowns and menus have visible text in light theme */
+.light [role="menu"],
+.light [role="listbox"],
+.light [role="dialog"] {
+  color: rgba(31, 41, 55, 1); /* gray-800 */
+  background-color: rgba(255, 255, 255, 1); /* white */
+}
+
+/* Fix for text inside buttons in light theme */
+.light button,
+.light [role="button"] {
+  color: currentColor;
+}
+
+/* Link contrast improvements */
+.dark a:not(.btn):not([role="button"]) {
+  color: rgba(96, 165, 250, 1); /* bright blue for dark mode links */
+}
+
+.light a:not(.btn):not([role="button"]) {
+  color: rgba(29, 78, 216, 1); /* darker blue for light mode links */
+}
+
+/* Gradient text effect */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, var(--primary), #3b82f6);
+}
+
+/* Background adjustments for dark mode */
+.dark .bg-secondary\/5 {
+  background-color: rgba(31, 41, 55, 0.5); /* gray-800 with opacity */
+}
+
+.dark .bg-primary\/10 {
+  background-color: rgba(30, 58, 138, 0.2); /* blue-900 with opacity */
+}
+
+/* Card contrast improvements */
+.dark .card,
+.dark [class*="card-"] {
+  background-color: rgba(30, 41, 59, 1); /* slate-800 for dark mode cards */
+  border-color: rgba(51, 65, 85, 0.5); /* slate-700 with opacity for borders */
+}
+
+.light .card,
+.light [class*="card-"] {
+  background-color: rgba(255, 255, 255, 1); /* Pure white for light mode cards */
+  border-color: rgba(226, 232, 240, 1); /* slate-200 for borders */
+}
+
+/* Button contrast improvements */
+.dark .btn-primary,
+.dark [class*="btn-primary"] {
+  background-color: rgba(59, 130, 246, 1); /* blue-500 */
+  color: white;
+}
+
+.light .btn-primary,
+.light [class*="btn-primary"] {
+  background-color: rgba(37, 99, 235, 1); /* blue-600 */
+  color: white;
+}
+
+/* Button text color improvements for both themes */
+.dark .Button--variant-outline,
+.dark button[data-variant="outline"],
+.dark a[data-variant="outline"] {
+  color: white !important;
+}
+
+.light .Button--variant-outline,
+.light button[data-variant="outline"],
+.light a[data-variant="outline"] {
+  color: black !important;
+}
+
+/* Fix ghost button styling */
+.dark .Button--variant-ghost,
+.dark button[data-variant="ghost"],
+.dark a[data-variant="ghost"] {
+  color: white !important;
+}
+
+.light .Button--variant-ghost,
+.light button[data-variant="ghost"],
+.light a[data-variant="ghost"] {
+  color: black !important;
+}
+
+/* Fix link button styling */
+.dark .Button--variant-link,
+.dark button[data-variant="link"],
+.dark a[data-variant="link"] {
+  color: white !important;
+}
+
+.light .Button--variant-link,
+.light button[data-variant="link"],
+.light a[data-variant="link"] {
+  color: black !important;
+}
+
+/* Direct class targeting */
+.dark button[class*="outline"],
+.dark a[class*="outline"],
+.dark [role="button"][class*="outline"] {
+  color: white !important;
+}
+
+.light button[class*="outline"],
+.light a[class*="outline"],
+.light [role="button"][class*="outline"] {
+  color: black !important;
+}
+
+.dark button[class*="ghost"],
+.dark a[class*="ghost"] {
+  color: white !important;
+}
+
+.light button[class*="ghost"],
+.light a[class*="ghost"] {
+  color: black !important;
+}
+
+/* Fix for Shadcn components in light theme */
+/* Dialog and popover fixes */
+.light [data-radix-popper-content-wrapper] {
+  color: rgba(17, 24, 39, 1); /* gray-900 */
+}
+
+/* Toast notification fixes for light mode */
+.light .toast {
+  color: rgba(17, 24, 39, 1); /* gray-900 */
+  background-color: rgba(255, 255, 255, 1); /* white */
+  border-color: rgba(229, 231, 235, 1); /* gray-200 */
+}
+
+/* Hover card fixes */
+.light [data-radix-hover-card-content] {
+  color: rgba(17, 24, 39, 1); /* gray-900 */
+  background-color: rgba(255, 255, 255, 1); /* white */
+  border-color: rgba(229, 231, 235, 1); /* gray-200 */
+}
+
+/* Dropdown menu items */
+.light [role="menuitem"] {
+  color: rgba(17, 24, 39, 1); /* gray-900 */
+}
+
+.light [role="menuitem"]:hover,
+.light [role="menuitem"]:focus {
+  background-color: rgba(243, 244, 246, 1); /* gray-100 */
+}
+
+/* Fix for select dropdown */
+.light [role="listbox"] [role="option"] {
+  color: rgba(17, 24, 39, 1); /* gray-900 */
+}
+
+/* Fix for table in light mode */
+.light table {
+  color: rgba(17, 24, 39, 1); /* gray-900 */
+}
+
+.light thead th {
+  color: rgba(55, 65, 81, 1); /* gray-700 */
+}
+
+.light tbody tr {
+  border-color: rgba(229, 231, 235, 1); /* gray-200 */
+}
+
+/* Fix for code blocks in light mode */
+.light pre,
+.light code {
+  color: rgba(31, 41, 55, 1); /* gray-800 */
+  background-color: rgba(243, 244, 246, 1); /* gray-100 */
+}
+
+/* Enhanced contrast mode styles */
+[data-enhanced-contrast="true"] {
+  --enhanced-text-contrast: 1.15; /* Increased contrast ratio */
+}
+
+[data-enhanced-contrast="true"].light {
+  --foreground: 222 47% 11%; /* Even darker text in light mode for maximum contrast */
+  --muted-foreground: 215 25% 27%; /* Darker muted text */
+  --primary: 217 91% 60%; /* Brighter blue for better visibility */
+}
+
+[data-enhanced-contrast="true"].dark {
+  --foreground: 210 40% 98%; /* Brighter text in dark mode */
+  --background: 222 47% 10%; /* Slightly darker background */
+  --primary: 217 91% 60%; /* Brighter blue for better visibility */
+}
+
+/* Fix for any shadcn elements with low contrast */
+[data-enhanced-contrast="true"] [data-radix-scroll-area-viewport] {
+  color: inherit !important;
+}
+
+[data-enhanced-contrast="true"] [class*="shadcn-"] {
+  color: inherit !important;
+}
+
+/* Target shadcn Button component specifically */
+.dark [class*="inline-flex items-center justify-center"][class*="rounded-md text-sm"][class*="variant-outline"],
+.dark [class*="inline-flex items-center justify-center"][class*="rounded-md text-sm"][class*="variant-ghost"],
+.dark [class*="inline-flex items-center justify-center"][class*="rounded-md text-sm"][class*="variant-link"] {
+  color: white !important;
+}
+
+.light [class*="inline-flex items-center justify-center"][class*="rounded-md text-sm"][class*="variant-outline"],
+.light [class*="inline-flex items-center justify-center"][class*="rounded-md text-sm"][class*="variant-ghost"],
+.light [class*="inline-flex items-center justify-center"][class*="rounded-md text-sm"][class*="variant-link"] {
+  color: black !important;
+}
+
+/* Direct class targeting for Shadcn UI buttons based on their class structure */
+.dark button.border.border-input.bg-background {
+  color: white !important;
+}
+
+.light button.border.border-input.bg-background {
+  color: black !important;
+}
+
+/* View Details, Upgrade Plan buttons - text color fix */
+.dark a.border.border-input,
+.dark button.border.border-input {
+  color: white !important;
+}
+
+.light a.border.border-input,
+.light button.border.border-input {
+  color: black !important;
+}
