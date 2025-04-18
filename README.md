@@ -2,7 +2,7 @@
 
 VenThatGrant - AI-Powered Grant Management Platform
 
-Overview
+<b>Overview</b>
 
 VenThatGrant is a comprehensive grant management platform that leverages artificial intelligence to help researchers, nonprofit organizations, and grant seekers find, apply for, and manage funding opportunities. Built on top of the Venice AI API, this application streamlines the entire grant lifecycle from discovery to reporting. Powered by Venice AI and EduChain.
 
@@ -92,7 +92,7 @@ The upcoming staking feature on EduChain allows users—especially students, res
 
 
 
-🔒 How It Might Work:
+🔒 How It Would Work:
 
 
 
