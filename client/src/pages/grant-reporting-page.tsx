@@ -59,14 +59,12 @@ export default function GrantReportingPage() {
   const reportContentRef = useRef<HTMLDivElement>(null);
   
   // Get user's proposals
-  const { data: proposalsResponse, isLoading: isLoadingProposals } = useQuery<{ success: boolean, data: Proposal[] }>({
+  const { 
+    data: proposalsResponse, 
+    isLoading: isLoadingProposals 
+  } = useQuery<{ success: boolean, data: Proposal[] }>({
     queryKey: ["/api/proposals"],
-    onSuccess: (response) => {
-      console.log("Loaded proposals response:", response);
-    },
-    onError: (error) => {
-      console.error("Failed to load proposals:", error);
-    }
+    // Remove callbacks to fix TypeScript errors with TanStack Query v5
   });
   
   // Extract proposals from the response
@@ -83,20 +81,22 @@ export default function GrantReportingPage() {
     refetchOnWindowFocus: false, // Prevent refetch on window focus
     refetchOnMount: true, // We do want to fetch when the component mounts
     refetchOnReconnect: false, // Prevent refetch on reconnect
-    onSuccess: (response) => {
-      console.log("QUERY: Loaded reports (useQuery):", response);
-      if (response && response.data) {
-        console.log("QUERY: Number of reports loaded:", response.data.length);
-        if (response.data.length > 0) {
-          console.log("QUERY: Report IDs:", response.data.map(r => r.id).join(', '));
-        }
-      }
-    },
   });
   
-  // Extract reports from the response and filter out deleted reports
+  // Log report data when it changes (using useEffect instead of onSuccess callback)
+  useEffect(() => {
+    if (reportsResponse && reportsResponse.data) {
+      console.log("QUERY: Loaded reports (useQuery):", reportsResponse);
+      console.log("QUERY: Number of reports loaded:", reportsResponse.data.length);
+      if (reportsResponse.data.length > 0) {
+        console.log("QUERY: Report IDs:", reportsResponse.data.map((r: Report) => r.id).join(', '));
+      }
+    }
+  }, [reportsResponse]);
+  
+  // Extract reports from the response and filter out deleted reports with proper typing
   const reports = reportsResponse?.data ? 
-    reportsResponse.data.filter(report => !deletedReportIds.includes(report.id)) 
+    reportsResponse.data.filter((report: Report) => !deletedReportIds.includes(report.id)) 
     : undefined;
     
   // Log filtered reports
@@ -377,7 +377,7 @@ export default function GrantReportingPage() {
                             Loading proposals...
                           </SelectItem>
                         ) : proposals && proposals.length > 0 ? (
-                          proposals.map((proposal) => (
+                          proposals.map((proposal: Proposal) => (
                             <SelectItem key={proposal.id} value={proposal.id.toString()}>
                               {proposal.title}
                             </SelectItem>
@@ -570,7 +570,7 @@ export default function GrantReportingPage() {
                 </div>
               ) : reports && reports.length > 0 ? (
                 <div className="divide-y">
-                  {reports.map((report) => (
+                  {reports.map((report: Report) => (
                     <div key={report.id} className="py-4 first:pt-0 last:pb-0">
                       <div className="flex items-center justify-between">
                         <div>

@@ -2,53 +2,20 @@ import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
 
-// Define types for clarity
-type PubSub = Record<string, any>;
-type ImageCompression = 'NONE' | 'FAST' | 'MEDIUM' | 'SLOW';
-type RGBAData = { data: Uint8Array, width: number, height: number };
-type GState = Record<string, any>;
-
 /**
- * Declare module augmentation for jsPDF to include autotable
+ * Simple interface for jsPDF
+ * This avoids declaring type definitions that might conflict with the library
  */
 declare module 'jspdf' {
-  // Interface for jsPDF that includes only what we need
   interface jsPDF {
-    // Auto-table
-    autoTable: (options: Record<string, any>) => jsPDF;
-    
-    // Internal structure
-    internal: {
-      events: PubSub;
-      scaleFactor: number;
-      pageSize: {
-        width: number;
-        getWidth: () => number;
-        height: number;
-        getHeight: () => number;
-      };
-      pages: number[];
-      getEncryptor(objectId: number): (data: string) => string;
-    };
-    
-    // Page and text functions
+    autoTable: (options: any) => jsPDF;
+    internal: any;
     setPage: (pageNumber: number) => jsPDF;
     getTextWidth: (text: string) => number;
-    
-    // Graphics state management
     saveGraphicsState: () => jsPDF;
     restoreGraphicsState: () => jsPDF;
-    GState: (parameters: GState) => GState;
-    
-    // Standard image addition with correct type overloads
-    addImage: {
-      (imageData: string | HTMLImageElement | HTMLCanvasElement | Uint8Array | RGBAData, 
-       format: string, x: number, y: number, w: number, h: number, 
-       alias?: string, compression?: ImageCompression, rotation?: number): jsPDF;
-      (imageData: string | HTMLImageElement | HTMLCanvasElement | Uint8Array | RGBAData, 
-       x: number, y: number, w: number, h: number, 
-       alias?: string, compression?: ImageCompression, rotation?: number): jsPDF;
-    };
+    GState: any;
+    // Note: We don't explicitly redefine addImage to avoid type conflicts
   }
 }
 

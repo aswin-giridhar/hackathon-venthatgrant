@@ -9,7 +9,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
-import { BellIcon, KeyIcon, UserIcon, ImageIcon, UploadIcon, BrainIcon, BadgeInfoIcon } from "lucide-react";
+import { BellIcon, KeyIcon, UserIcon, ImageIcon, UploadIcon, BrainIcon, BadgeInfoIcon, WalletIcon, ExternalLinkIcon, ListChecksIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -173,6 +173,7 @@ export default function SettingsPage() {
           <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="ai-models">AI Models</TabsTrigger>
+          <TabsTrigger value="educhain">EDUChain</TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-6">
@@ -556,6 +557,338 @@ export default function SettingsPage() {
                 >
                   {loading ? "Saving..." : "Save Preferences"}
                 </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="educhain" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <WalletIcon className="mr-2 h-5 w-5" />
+                EDUChain Wallet Configuration
+              </CardTitle>
+              <CardDescription>
+                Setup your wallet for EDU Chain to interact with Open Campus ecosystem
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Setting Up RPC Information</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Before claiming test tokens, you need to configure the test network for EDU Chain in your wallet. 
+                    Using MetaMask as an example:
+                  </p>
+                  
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-4">
+                    <p className="text-sm">
+                      Open your wallet and click <span className="font-medium">Select a network → Add a custom network</span>. 
+                      Enter the following RPC details:
+                    </p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Network Name</Label>
+                        <div className="flex">
+                          <Input 
+                            value="Open Campus Codex" 
+                            readOnly
+                            className="bg-background"
+                          />
+                          <Button 
+                            variant="outline" 
+                            className="ml-2" 
+                            onClick={() => {
+                              navigator.clipboard.writeText("Open Campus Codex");
+                              toast({
+                                title: "Copied to clipboard",
+                                description: "Network name copied to clipboard",
+                              });
+                            }}
+                          >
+                            Copy
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>RPC URL</Label>
+                        <div className="flex">
+                          <Input 
+                            value="https://rpc.open-campus-codex.gelato.digital"
+                            readOnly
+                            className="bg-background"
+                          />
+                          <Button 
+                            variant="outline" 
+                            className="ml-2" 
+                            onClick={() => {
+                              navigator.clipboard.writeText("https://rpc.open-campus-codex.gelato.digital");
+                              toast({
+                                title: "Copied to clipboard",
+                                description: "RPC URL copied to clipboard",
+                              });
+                            }}
+                          >
+                            Copy
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Chain ID</Label>
+                        <div className="flex">
+                          <Input 
+                            value="656476"
+                            readOnly
+                            className="bg-background"
+                          />
+                          <Button 
+                            variant="outline" 
+                            className="ml-2" 
+                            onClick={() => {
+                              navigator.clipboard.writeText("656476");
+                              toast({
+                                title: "Copied to clipboard",
+                                description: "Chain ID copied to clipboard",
+                              });
+                            }}
+                          >
+                            Copy
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Native Currency Symbol</Label>
+                        <div className="flex">
+                          <Input 
+                            value="EDU"
+                            readOnly
+                            className="bg-background"
+                          />
+                          <Button 
+                            variant="outline" 
+                            className="ml-2" 
+                            onClick={() => {
+                              navigator.clipboard.writeText("EDU");
+                              toast({
+                                title: "Copied to clipboard",
+                                description: "Currency symbol copied to clipboard",
+                              });
+                            }}
+                          >
+                            Copy
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Block Explorer URL</Label>
+                        <div className="flex">
+                          <Input 
+                            value="https://opencampus-codex.blockscout.com/"
+                            readOnly
+                            className="bg-background"
+                          />
+                          <Button 
+                            variant="outline" 
+                            className="ml-2" 
+                            onClick={() => {
+                              navigator.clipboard.writeText("https://opencampus-codex.blockscout.com/");
+                              toast({
+                                title: "Copied to clipboard",
+                                description: "Explorer URL copied to clipboard",
+                              });
+                            }}
+                          >
+                            Copy
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <p className="text-sm text-muted-foreground">
+                      After setting up the network, your wallet balance should show 0 EDU tokens.
+                    </p>
+                  </div>
+                </div>
+                
+                <Separator />
+                
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Claiming Test Tokens</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Follow these steps to claim test tokens for the EDU Chain testnet:
+                  </p>
+                  
+                  <div className="bg-muted/50 p-4 rounded-lg">
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
+                        <div>
+                          <p className="font-medium">Create or Log into dRPC Account</p>
+                          <p className="text-sm text-muted-foreground">
+                            Register and log in to dRPC at the faucet link below. This is quick and free.
+                          </p>
+                          <div className="mt-2">
+                            <Button variant="outline" className="flex items-center gap-2" onClick={() => window.open("https://drpc.org/faucet/open-campus-codex", "_blank")}>
+                              <ExternalLinkIcon className="h-4 w-4" />
+                              Visit dRPC Faucet
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-3">
+                        <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
+                        <div>
+                          <p className="font-medium">Connect Your Wallet to EDU Chain Testnet</p>
+                          <p className="text-sm text-muted-foreground">
+                            Configure your wallet for the EDU Chain test network. After connecting, you'll see a prompt to complete an off-chain signature to confirm your account. This process doesn't consume any gas.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-3">
+                        <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
+                        <div>
+                          <p className="font-medium">Use Proof-of-Work to Start Minting</p>
+                          <p className="text-sm text-muted-foreground">
+                            To prevent abuse, the faucet uses a lightweight Proof-of-Work mechanism for verification. This isn't real mining but a simple security step to validate requests.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-3">
+                        <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">4</div>
+                        <div>
+                          <p className="font-medium">Claim Tokens with Gitcoin Passport</p>
+                          <p className="text-sm text-muted-foreground">
+                            If you have a Gitcoin account with a verified score, you can also claim test tokens through this method.
+                          </p>
+                          <div className="mt-2">
+                            <Button variant="outline" className="flex items-center gap-2" onClick={() => window.open("https://www.hackquest.io/learn/142e7446-5ed5-812f-9251-edcb031ef53e/142e7446-5ed5-817d-bd46-de4c6a71d944", "_blank")}>
+                              <ExternalLinkIcon className="h-4 w-4" />
+                              Learn More About Gitcoin Claiming
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <Separator />
+                
+                <div>
+                  <h3 className="text-lg font-medium mb-2">$EDU Token Contract Addresses</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    The $EDU token is available on multiple chains. Here are the official contract addresses:
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label>BNB Chain (BEP-20)</Label>
+                      <div className="flex">
+                        <Input 
+                          value="0xBdEAe1cA48894A1759A8374D63925f21f2Ee2639"
+                          readOnly
+                          className="bg-background font-mono text-sm"
+                        />
+                        <Button 
+                          variant="outline" 
+                          className="ml-2" 
+                          onClick={() => {
+                            navigator.clipboard.writeText("0xBdEAe1cA48894A1759A8374D63925f21f2Ee2639");
+                            toast({
+                              title: "Copied to clipboard",
+                              description: "BNB Chain contract address copied",
+                            });
+                          }}
+                        >
+                          Copy
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="ml-2" 
+                          onClick={() => window.open("https://bscscan.com/token/0xBdEAe1cA48894A1759A8374D63925f21f2Ee2639", "_blank")}
+                        >
+                          <ExternalLinkIcon className="h-4 w-4 mr-2" />
+                          View
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label>Ethereum (ERC-20)</Label>
+                      <div className="flex">
+                        <Input 
+                          value="0xf8173a39c56a554837c4c7f104153a005d284d11"
+                          readOnly
+                          className="bg-background font-mono text-sm"
+                        />
+                        <Button 
+                          variant="outline" 
+                          className="ml-2" 
+                          onClick={() => {
+                            navigator.clipboard.writeText("0xf8173a39c56a554837c4c7f104153a005d284d11");
+                            toast({
+                              title: "Copied to clipboard",
+                              description: "Ethereum contract address copied",
+                            });
+                          }}
+                        >
+                          Copy
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="ml-2" 
+                          onClick={() => window.open("https://etherscan.io/address/0xf8173a39c56a554837c4c7f104153a005d284d11", "_blank")}
+                        >
+                          <ExternalLinkIcon className="h-4 w-4 mr-2" />
+                          View
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-2">
+                      <Button variant="outline" className="flex items-center gap-2" onClick={() => window.open("https://userdocs.opencampus.xyz/tokens/usdedu/key-information/contract-address", "_blank")}>
+                        <ExternalLinkIcon className="h-4 w-4" />
+                        More information on $EDU token contracts
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                
+                <Separator />
+                
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Token Bridge</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    $EDU can be bridged between BNB Chain (BEP-20) & Ethereum (ERC-20) via Stargate.
+                  </p>
+                  
+                  <div className="flex items-center gap-3 mt-4">
+                    <Button variant="outline" className="flex items-center gap-2" onClick={() => window.open("https://stargate.finance/transfer", "_blank")}>
+                      <ExternalLinkIcon className="h-4 w-4" />
+                      Bridge $EDU tokens with Stargate
+                    </Button>
+                  </div>
+                </div>
+                
+                <Separator />
+                
+                <div className="mt-4">
+                  <h3 className="text-lg font-medium mb-2">About EDUChain and OCID</h3>
+                  <p className="text-sm text-muted-foreground">
+                    OCID (Open Campus ID) is a digital identity system based on Soulbound Token technology. It offers learners a decentralized digital identity represented as non-transferable NFTs. OCID emphasizes privacy and data security, enabling users to manage their learning achievements, professional qualifications, and project outcomes while deciding how and when to share this information.
+                  </p>
+                  <div className="mt-4">
+                    <Button variant="outline" className="flex items-center gap-2" onClick={() => window.open("https://id.opencampus.xyz/auth", "_blank")}>
+                      <ExternalLinkIcon className="h-4 w-4" />
+                      Apply for your OCID
+                    </Button>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
