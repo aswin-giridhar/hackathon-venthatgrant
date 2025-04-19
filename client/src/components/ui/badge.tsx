@@ -27,12 +27,17 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {}
 
-// To maintain HMR compatibility, we're keeping the functional form but adding a
-// wrapper div with direct ref assignment
-function Badge({ className, variant, ...props }: BadgeProps) {
-  return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  )
-}
+// Using forwardRef to properly handle refs when used with Radix UI components
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+  ({ className, variant, ...props }, ref) => {
+    return (
+      <div 
+        className={cn(badgeVariants({ variant }), className)} 
+        ref={ref}
+        {...props} 
+      />
+    )
+  }
+)
 
 export { Badge, badgeVariants }

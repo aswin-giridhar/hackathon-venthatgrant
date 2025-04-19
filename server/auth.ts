@@ -345,4 +345,85 @@ export function setupAuth(app: Express) {
       });
     }
   });
+
+  // OCID login route
+  app.post("/api/ocid-login", async (req, res) => {
+    try {
+      // In a real implementation, you would:
+      // 1. Verify the OCID credential with the OCID provider
+      // 2. Retrieve or create a user record based on the OCID identity
+      // 3. Generate a session for the user
+      
+      // For demo purposes, we'll simulate this process:
+      console.log('OCID login request received:', req.body);
+      
+      // In sandbox mode, the authResult may be empty or in a different format
+      // So we'll proceed regardless of the exact structure
+
+      // Extract user info from the auth result
+      // In a real implementation, you would verify this with the OCID provider
+      const { authResult } = req.body;
+      console.log('OCID auth result:', authResult);
+      
+      // Check if user exists or create a new one
+      let user = await storage.getUserByEmail("ocid-user@example.com");
+
+      if (!user) {
+        // Create a new user
+        user = await storage.createUser({
+          username: `ocid_user_${Date.now()}`,
+          email: "ocid-user@example.com",
+          password: await hashPassword(randomBytes(16).toString('hex')), // Random secure password
+          fullName: "OCID User",
+          organization: "EduChain OCID"
+        });
+
+        // Log user creation
+        console.log('Created new OCID user:', user.id);
+      }
+
+      // Log the user in by creating a session
+      req.login(user, (err) => {
+        if (err) {
+          console.error('OCID login error:', err);
+          return res.status(500).json({
+            success: false,
+            error: {
+              message: "Failed to create session for OCID user",
+              code: "OCID_SESSION_ERROR"
+            }
+          });
+        }
+
+        // Return user data without password
+        const { password, ...userWithoutPassword } = user;
+        
+        // Create activity for OCID login
+        storage.createActivity({
+          userId: user.id,
+          type: "login",
+          description: "Logged in with OCID",
+          entityId: user.id,
+          entityType: "user"
+        }).catch(err => {
+          console.error("Error creating login activity:", err);
+        });
+        
+        res.status(200).json({
+          success: true,
+          data: userWithoutPassword,
+          message: "Successfully logged in with OCID"
+        });
+      });
+    } catch (error) {
+      console.error('OCID authentication error:', error);
+      res.status(500).json({
+        success: false,
+        error: {
+          message: "Failed to authenticate with OCID",
+          code: "OCID_AUTH_ERROR"
+        }
+      });
+    }
+  });
 }
